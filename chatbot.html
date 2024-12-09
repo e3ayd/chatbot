@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Chatbot</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2724/2724641.png" type="image/png">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Genel Stil */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+
+        /* Chatbot İkonu */
+        .chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f29d35;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .chatbot-icon i {
+            font-size: 28px;
+            color: #fff;
+        }
+
+        /* Chatbot Popup */
+        .chatbot-popup {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 400px;
+            max-width: 90%;
+            height: 600px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Başlık */
+        .chatbot-header {
+            background-color: #f29d35;
+            color: white;
+            padding: 20px 20px;
+            font-weight: bold;
+            font-size: 22px;
+            position: relative;
+        }
+
+        .chatbot-header .back-btn {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            cursor: pointer;
+            display: none;
+        }
+
+        /* İçerik */
+        .chatbot-content {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .chatbot-content h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .chatbot-content p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .chatbot-content button {
+            display: inline-block;
+            background-color: #f29d35;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .chatbot-content button:hover {
+            background-color: #e8902c;
+        }
+
+        /* Chat Alanı */
+        .chat-area {
+            display: none;
+            flex-direction: column;
+            justify-content: flex-end;
+            height: 100%;
+        }
+
+        .chat-area .message-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .messages {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%; /* Tüm alanı kaplayacak */
+        text-align: center; /* Metinleri ortalar */
+        }
+
+        .chat-area .message {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .chat-area .message.user {
+            color: #f29d35;
+            font-weight: bold;
+        }
+
+        /* Sabit Yazı Yazma Alanı */
+        .chat-area .chat-input {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .chat-area .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        .chat-area .chat-input input {
+            width: 100%;
+            margin-right: 10px; /* Buton ile arasına mesafe eklemek için */
+        }
+
+
+        .chat-area .chat-input button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            background-color: #f29d35;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .chat-area .chat-input button:hover {
+            background-color: #e8902c;
+        }
+
+        /* Sekme Butonları */
+        .chatbot-tabs {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f7f7f7;
+            border-top: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .chatbot-tabs button {
+            flex: 1;
+            background: none;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            color: #555;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chatbot-tabs button i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .chatbot-tabs button.active {
+            color: #f29d35;
+        }
+
+        /* İçerik Sekmeleri */
+        .home, .messages, .help {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Chatbot İkonu -->
+<div class="chatbot-icon" onclick="toggleChatbot()">
+    <i class="fas fa-comments"></i>
+</div>
+
+<!-- Chatbot Popup -->
+<div class="chatbot-popup" id="chatbot">
+    <div class="chatbot-header">
+        Chat Assistant
+        <i class="fas fa-arrow-left back-btn" id="backBtn" onclick="goBack()"></i>
+    </div>
+    <div class="chatbot-content">
+        <!-- Home İçeriği -->
+        <div class="home">
+            <h3>Welcome to Chatbot</h3>
+            <p>Your virtual assistant to guide and support you.</p>
+            <div style="display: flex; align-items: center; justify-content: space-around; margin-top: 30px;">
+                <div style="text-align: center;">
+                    <i class="fas fa-question-circle" style="font-size: 40px; color: #f29d35;"></i>
+                    <p>FAQs</p>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fas fa-headset" style="font-size: 40px; color: #f29d35;"></i>
+                    <p>Support</p>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fas fa-info-circle" style="font-size: 40px; color: #f29d35;"></i>
+                    <p>Information</p>
+                </div>
+            </div>
+            <p style="margin-top: 30px; font-size: 14px; color: #777;">
+                Get quick answers, personalized support, or explore the most common questions in our FAQs section.
+            </p>
+            <ul style="list-style-type: none; padding: 0; margin-top: 20px;">
+                <li style="margin-bottom: 15px;">
+                    <a href="#" style="text-decoration: none; color: #f29d35; font-weight: bold;">
+                        <i class="fas fa-book"></i> Frequently Asked Questions
+                    </a>
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <a href="#" style="text-decoration: none; color: #f29d35; font-weight: bold;">
+                        <i class="fas fa-headset"></i> Contact Support
+                    </a>
+                </li>
+                <li style="margin-bottom: 15px;">
+                    <a href="#" style="text-decoration: none; color: #f29d35; font-weight: bold;">
+                        <i class="fas fa-user-circle"></i> Chat with a Representative
+                    </a>
+                </li>
+            </ul>
+            <div style="margin-top: 30px; text-align: left;">
+                <p style="font-weight: bold; font-size: 16px; color: black; margin-bottom: 15px;">
+                    Need help? Feel free to ask your question below!
+                </p>
+                <button onclick="openChat()" style="background-color: #f29d35; color: white; padding: 10px 20px; font-size: 14px; border: none; border-radius: 5px; cursor: pointer;">
+                    Ask a Question
+                </button>
+            </div>            
+        </div>
+        
+
+        <!-- Messages İçeriği -->
+        <div class="messages">
+            <h3>Your Messages</h3>
+            <p>No messages available.</p>
+            <button onclick="openChat()">Ask a Question</button>
+        </div>
+
+        <!-- Help İçeriği -->
+        <div class="help">
+            <h3>Help Topics</h3>
+            <ul>
+                <li><a href="#">Reset Password</a></li>
+                <li><a href="#">Payment Issues</a></li>
+                <li><a href="#">General Questions</a></li>
+            </ul>
+        </div>
+
+        <!-- Chat Alanı -->
+        <div class="chat-area" id="chatArea">
+            <div class="message-area" id="messageArea">
+                <!-- Kullanıcı mesajları burada görünecek -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Type your question here..." onkeypress="sendMessage(event)">
+                <button onclick="sendChat()" style="margin-bottom: 10px;">Send</button>
+            </div>
+        </div>
+    </div>
+    <div class="chatbot-tabs" id="chatbotTabs">
+        <button onclick="showTab('home')" class="active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </button>
+        <button onclick="showTab('messages')">
+            <i class="fas fa-envelope"></i>
+            <span>Messages</span>
+        </button>
+        <button onclick="showTab('help')">
+            <i class="fas fa-question-circle"></i>
+            <span>Help</span>
+        </button>
+    </div>
+</div>
+
+<script>
+    // Chatbot Aç/Kapa
+    function toggleChatbot() {
+        const chatbot = document.getElementById('chatbot');
+        chatbot.style.display = chatbot.style.display === 'none' ? 'flex' : 'none';
+    }
+
+    // Sekme Geçişi
+    function showTab(tab) {
+        document.querySelectorAll('.chatbot-content > div').forEach(div => {
+            div.style.display = 'none';
+        });
+        document.querySelector(`.${tab}`).style.display = 'block';
+        document.querySelectorAll('.chatbot-tabs button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelector(`.chatbot-tabs button[onclick="showTab('${tab}')"]`).classList.add('active');
+    }
+
+    // Chat Açma
+    function openChat() {
+        document.querySelector('.home').style.display = 'none';
+        document.querySelector('.messages').style.display = 'none';
+        document.querySelector('.help').style.display = 'none';
+        document.getElementById('chatbotTabs').style.display = 'none';
+        document.querySelector('.chat-area').style.display = 'flex';
+        document.getElementById('backBtn').style.display = 'inline-block';
+    }
+
+    // Geri Dönme
+    function goBack() {
+        document.querySelector('.home').style.display = 'block';
+        document.querySelector('.messages').style.display = 'none';
+        document.querySelector('.help').style.display = 'none';
+        document.getElementById('chatbotTabs').style.display = 'flex';
+        document.querySelector('.chat-area').style.display = 'none';
+        document.getElementById('backBtn').style.display = 'none';
+    }
+
+    // Mesaj Gönderme
+    function sendMessage(event) {
+        if (event.key === 'Enter') {
+            sendChat();
+        }
+    }
+
+    function sendChat() {
+        const input = document.getElementById('userInput');
+        const message = input.value.trim();
+        if (message) {
+            const messageArea = document.getElementById('messageArea');
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user';
+            userMessage.innerText = message;
+            messageArea.appendChild(userMessage);
+            input.value = '';
+            messageArea.scrollTop = messageArea.scrollHeight;
+        }
+    }
+
+    // Varsayılan Sekme
+    showTab('home');
+</script>
+
+</body>
+</html>
