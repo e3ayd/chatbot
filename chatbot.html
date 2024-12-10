@@ -69,10 +69,17 @@
             left: 10px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 16px;
+            font-size: 20px;
+            margin-right: 10px;
             cursor: pointer;
             display: none;
         }
+
+        .chatbot-header.shifted {
+        text-align: left;
+        padding-left: 40px;
+        }
+
 
         /* İçerik */
         .chatbot-content {
@@ -129,8 +136,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100%; /* Tüm alanı kaplayacak */
-        text-align: center; /* Metinleri ortalar */
+        height: 100%;
+        text-align: center; 
         }
 
         .chat-area .message {
@@ -138,11 +145,33 @@
             font-size: 14px;
             color: #555;
         }
-
+        /* Kullanıcı Mesajı*/
         .chat-area .message.user {
-            color: #f29d35;
-            font-weight: bold;
-        }
+        background-color: #f29d35;
+        color: #fff;
+        font-weight: bold;
+        padding: 10px 15px;
+        border-radius: 15px 15px 0 15px; 
+        margin: 5px 0; 
+        margin-left: auto; 
+        max-width: 70%; 
+        word-wrap: break-word; 
+        text-align: left; 
+        }   
+
+        /* Robot mesajı (gradient gri ton) */
+        .chat-area .message.robot {
+        background: linear-gradient(145deg, #e4e4e4, #f2f2f2); 
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 15px 15px 15px 0;
+        margin: 5px 0;
+        margin-right: auto;
+        max-width: 70%;
+        word-wrap: break-word;
+        text-align: left;
+    }
+
 
         /* Sabit Yazı Yazma Alanı */
         .chat-area .chat-input {
@@ -161,7 +190,7 @@
 
         .chat-area .chat-input input {
             width: 100%;
-            margin-right: 10px; /* Buton ile arasına mesafe eklemek için */
+            margin-right: 10px;
         }
 
 
@@ -214,6 +243,205 @@
         .home, .messages, .help {
             display: none;
         }
+
+        /* Özel Scroll Bar Tasarımı */
+        .chatbot-content::-webkit-scrollbar,
+        .chat-area .message-area::-webkit-scrollbar {
+            width: 8px; 
+        }
+
+        .chatbot-content::-webkit-scrollbar-thumb,
+        .chat-area .message-area::-webkit-scrollbar-thumb {
+            background-color: #f29d35; 
+            border-radius: 10px; 
+        }
+
+        .chatbot-content::-webkit-scrollbar-thumb:hover,
+        .chat-area .message-area::-webkit-scrollbar-thumb:hover {
+            background-color: #e8902c; 
+        }
+
+        .chatbot-content::-webkit-scrollbar-track,
+        .chat-area .message-area::-webkit-scrollbar-track {
+            background-color: #f7f7f7; 
+            border-radius: 10px;
+        }
+        .help i {
+        font-size: 30px;
+        color: #f29d35;
+        margin-right: 15px;
+        width: 40px;
+        text-align: center; 
+        }
+
+        .home {
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.hero-section {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+    border-radius: 15px;
+}
+
+.hero-section h2 {
+    color: #2d3436;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.subtitle {
+    color: #636e72;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    position: relative;
+    max-width: 70%;
+    margin: 0 ;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px 40px;
+    border: 2px solid #e9ecef;
+    border-radius: 25px;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.search-bar i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #b2bec3;
+}
+
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.action-card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+}
+
+.action-card i {
+    font-size: 24px;
+    color: #f29d35;
+    margin-bottom: 10px;
+}
+
+.action-card h4 {
+    margin: 10px 0 5px;
+    color: #2d3436;
+}
+
+.action-card p {
+    font-size: 12px;
+    color: #636e72;
+    margin: 0;
+}
+
+.popular-topics {
+    margin-bottom: 30px;
+}
+
+.popular-topics h3 {
+    margin-bottom: 15px;
+    color: #2d3436;
+}
+
+.topic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.topic-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.topic-item:hover {
+    background: #e9ecef;
+}
+
+.topic-item i {
+    font-size: 18px;
+    color: #f29d35;
+    margin-right: 10px;
+}
+
+.quick-chat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background: linear-gradient(135deg, #f29d35, #e67e22);
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: #fff;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.quick-chat h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.quick-chat p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.chat-button {
+    background: white;
+    color: #f29d35;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-top: 15px;
+}
+
+.chat-button:hover {
+    transform: scale(1.05);
+}
     </style>
 </head>
 <body>
@@ -226,74 +454,117 @@
 <!-- Chatbot Popup -->
 <div class="chatbot-popup" id="chatbot">
     <div class="chatbot-header">
-        Chat Assistant
+       Chat Assistant
         <i class="fas fa-arrow-left back-btn" id="backBtn" onclick="goBack()"></i>
     </div>
     <div class="chatbot-content">
         <!-- Home İçeriği -->
-        <div class="home">
-            <h3>Welcome to Chatbot</h3>
-            <p>Your virtual assistant to guide and support you.</p>
-            <div style="display: flex; align-items: center; justify-content: space-around; margin-top: 30px;">
-                <div style="text-align: center;">
-                    <i class="fas fa-question-circle" style="font-size: 40px; color: #f29d35;"></i>
-                    <p>FAQs</p>
-                </div>
-                <div style="text-align: center;">
-                    <i class="fas fa-headset" style="font-size: 40px; color: #f29d35;"></i>
-                    <p>Support</p>
-                </div>
-                <div style="text-align: center;">
-                    <i class="fas fa-info-circle" style="font-size: 40px; color: #f29d35;"></i>
-                    <p>Information</p>
-                </div>
-            </div>
-            <p style="margin-top: 30px; font-size: 14px; color: #777;">
-                Get quick answers, personalized support, or explore the most common questions in our FAQs section.
-            </p>
-            <ul style="list-style-type: none; padding: 0; margin-top: 20px;">
-                <li style="margin-bottom: 15px;">
-                    <a href="#" style="text-decoration: none; color: #f29d35; font-weight: bold;">
-                        <i class="fas fa-book"></i> Frequently Asked Questions
-                    </a>
-                </li>
-                <li style="margin-bottom: 15px;">
-                    <a href="#" style="text-decoration: none; color: #f29d35; font-weight: bold;">
-                        <i class="fas fa-headset"></i> Contact Support
-                    </a>
-                </li>
-                <li style="margin-bottom: 15px;">
-                    <a href="#" style="text-decoration: none; color: #f29d35; font-weight: bold;">
-                        <i class="fas fa-user-circle"></i> Chat with a Representative
-                    </a>
-                </li>
-            </ul>
-            <div style="margin-top: 30px; text-align: left;">
-                <p style="font-weight: bold; font-size: 16px; color: black; margin-bottom: 15px;">
-                    Need help? Feel free to ask your question below!
-                </p>
-                <button onclick="openChat()" style="background-color: #f29d35; color: white; padding: 10px 20px; font-size: 14px; border: none; border-radius: 5px; cursor: pointer;">
-                    Ask a Question
-                </button>
-            </div>            
+<div class="home">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h2>Welcome to Smart Assistant</h2>
+        <p class="subtitle">Your AI-powered companion for instant help and support</p>
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search for help topics...">
         </div>
+    </div>
+
+  <!-- Quick Actions -->
+<div class="quick-actions">
+    <div class="action-card">
+        <i class="fas fa-question-circle"></i>
+        <h4>FAQs</h4>
+        <p>Find answers to common questions instantly</p>
+    </div>
+    <div class="action-card">
+        <i class="fas fa-headset"></i>
+        <h4>Support</h4>
+        <p>Submit a support ticket for assistance</p>
+    </div>
+    <div class="action-card">
+        <i class="fas fa-info-circle"></i>
+        <h4>Info</h4>
+        <p>Explore detailed tutorials and guides</p>
+    </div>
+</div>
+
+
+    <!-- Popular Topics -->
+    <div class="popular-topics">
+        <h3>Popular Topics</h3>
+        <div class="topic-grid">
+            <div class="topic-item">
+                <i class="fas fa-key"></i>
+                <span>Account Access</span>
+            </div>
+            <div class="topic-item">
+                <i class="fas fa-credit-card"></i>
+                <span>Billing</span>
+            </div>
+            <div class="topic-item">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </div>
+            <div class="topic-item">
+                <i class="fas fa-shield-alt"></i>
+                <span>Security</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Chat Section -->
+    <div class="quick-chat">
+        <h3>Start a Conversation</h3>
+        <p> Need help? Feel free to ask your question below!</p>
+        <button onclick="openChat()" class="chat-button">
+            Ask a Question
+        </button>
+    </div>
+</div>
         
 
         <!-- Messages İçeriği -->
         <div class="messages">
             <h3>Your Messages</h3>
             <p>No messages available.</p>
-            <button onclick="openChat()">Ask a Question</button>
+            <button onclick="openChat()"  class="chat-button">Ask a Question</button>
         </div>
 
         <!-- Help İçeriği -->
         <div class="help">
-            <h3>Help Topics</h3>
-            <ul>
-                <li><a href="#">Reset Password</a></li>
-                <li><a href="#">Payment Issues</a></li>
-                <li><a href="#">General Questions</a></li>
-            </ul>
+            <h3>How Can We Help You?</h3>
+            <p>Choose a topic below to get started:</p>
+            <div style="margin-top: 20px;">
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <i class="fas fa-key" style="font-size: 30px; color: #f29d35; margin-right: 15px;"></i>
+                    <div>
+                        <a href="#" style="text-decoration: none; color: #333; font-weight: bold;">Reset Password</a>
+                        <p style="margin: 5px 0; color: #555;">Learn how to reset your password securely.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <i class="fas fa-credit-card" style="font-size: 30px; color: #f29d35; margin-right: 15px;"></i>
+                    <div>
+                        <a href="#" style="text-decoration: none; color: #333; font-weight: bold;">Payment Issues</a>
+                        <p style="margin: 5px 0; color: #555;">Get help with transactions and payment errors.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <i class="fas fa-question-circle" style="font-size: 30px; color: #f29d35; margin-right: 15px;"></i>
+                    <div>
+                        <a href="#" style="text-decoration: none; color: #333; font-weight: bold;">General Questions</a>
+                        <p style="margin: 5px 0; color: #555;">Find answers to common inquiries.</p>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                    <i class="fas fa-user-shield" style="font-size: 30px; color: #f29d35; margin-right: 15px;"></i>
+                    <div>
+                        <a href="#" style="text-decoration: none; color: #333; font-weight: bold;">Privacy and Security</a>
+                        <p style="margin: 5px 0; color: #555;">Understand how we protect your data.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Chat Alanı -->
@@ -350,6 +621,8 @@
         document.getElementById('chatbotTabs').style.display = 'none';
         document.querySelector('.chat-area').style.display = 'flex';
         document.getElementById('backBtn').style.display = 'inline-block';
+
+        document.querySelector('.chatbot-header').classList.add('shifted');
     }
 
     // Geri Dönme
@@ -360,6 +633,15 @@
         document.getElementById('chatbotTabs').style.display = 'flex';
         document.querySelector('.chat-area').style.display = 'none';
         document.getElementById('backBtn').style.display = 'none';
+
+        // Chat Assistant yazısını eski haline getir
+        document.querySelector('.chatbot-header').classList.remove('shifted');
+
+        document.querySelectorAll('.chatbot-tabs button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+    document.querySelector(`.chatbot-tabs button[onclick="showTab('home')"]`).classList.add('active');
     }
 
     // Mesaj Gönderme
